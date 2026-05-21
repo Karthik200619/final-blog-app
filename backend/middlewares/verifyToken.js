@@ -12,6 +12,12 @@ export const verifyToken = (...allowedRoles) => {
       const token =
         req.cookies.token ||
         req.headers.authorization?.split(" ")[1];
+      console.log("Cookies:", req.cookies);
+console.log("Authorization:", req.headers.authorization);
+
+const token = req.cookies.token;
+
+console.log("Token:", token);
 
       if (!token) {
         return res.status(401).json({
