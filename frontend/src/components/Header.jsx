@@ -1,13 +1,5 @@
 import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
-import {
-  navbarClass,
-  navContainerClass,
-  navBrandClass,
-  navLinksClass,
-  navLinkClass,
-  navLinkActiveClass,
-} from "../styles/common";
 
 function Header() {
   const isAuthenticated = useAuth((state) => state.isAuthenticated);
@@ -21,11 +13,9 @@ function Header() {
     navigate("/login");
   };
 
-  // decide profile route based on role
   const getProfilePath = () => {
     if (!user) return "/";
 
-   // console.log("current user", user);
     switch (user.role) {
       case "AUTHOR":
         return "/author-profile";
@@ -37,52 +27,127 @@ function Header() {
   };
 
   return (
-    <nav className={navbarClass}>
-      <div className={navContainerClass}>
+    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
         {/* Logo */}
-        <NavLink to="/" className={navBrandClass}>
+        <NavLink
+          to="/"
+          className="
+            text-3xl font-extrabold
+            bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500
+            bg-clip-text text-transparent
+            hover:scale-105
+            transition-transform duration-300
+          "
+        >
           MyBlog
         </NavLink>
 
-        <ul className={navLinksClass}>
-          {/* Always visible */}
+        {/* Navigation Links */}
+        <ul className="flex items-center gap-3">
+
+          {/* Home */}
           <li>
-            <NavLink to="/" end className={({ isActive }) => (isActive ? navLinkActiveClass : navLinkClass)}>
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `
+                px-5 py-2 rounded-xl font-medium
+                transition-all duration-300
+                ${
+                  isActive
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                    : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                }
+                `
+              }
+            >
               Home
             </NavLink>
           </li>
 
-          {/* Not logged in */}
           {!isAuthenticated && (
             <>
+              {/* Register */}
               <li>
-                <NavLink to="/register" className={({ isActive }) => (isActive ? navLinkActiveClass : navLinkClass)}>
+                <NavLink
+                  to="/register"
+                  className={({ isActive }) =>
+                    `
+                    px-5 py-2 rounded-xl font-medium
+                    transition-all duration-300
+                    ${
+                      isActive
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                    }
+                    `
+                  }
+                >
                   Register
                 </NavLink>
               </li>
 
+              {/* Login */}
               <li>
-                <NavLink to="/login" className={({ isActive }) => (isActive ? navLinkActiveClass : navLinkClass)}>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    `
+                    px-5 py-2 rounded-xl font-medium
+                    transition-all duration-300
+                    ${
+                      isActive
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                    }
+                    `
+                  }
+                >
                   Login
                 </NavLink>
               </li>
             </>
           )}
 
-          {/* Logged in */}
           {isAuthenticated && (
             <>
+              {/* Profile */}
               <li>
                 <NavLink
                   to={getProfilePath()}
-                  className={({ isActive }) => (isActive ? navLinkActiveClass : navLinkClass)}
+                  className={({ isActive }) =>
+                    `
+                    px-5 py-2 rounded-xl font-medium
+                    transition-all duration-300
+                    ${
+                      isActive
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                    }
+                    `
+                  }
                 >
                   Profile
                 </NavLink>
               </li>
 
+              {/* Logout */}
               <li>
-                <button className={navLinkClass} onClick={handleLogout}>
+                <button
+                  onClick={handleLogout}
+                  className="
+                    px-5 py-2
+                    rounded-xl
+                    font-medium
+                    text-red-500
+                    hover:bg-red-50
+                    hover:text-red-600
+                    transition-all duration-300
+                  "
+                >
                   Logout
                 </button>
               </li>
